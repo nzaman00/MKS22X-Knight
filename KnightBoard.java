@@ -43,5 +43,14 @@ public class KnightBoard{
     return false;
   }
   
+  public boolean removeKnight(int row, int col) {
+    if (row >= 0 && row < board.length && col >= 0 && col < board[0].length) {
+      if (board[row][col] != 0) {
+        board[row][col] = 0;
+        return true;
+      }
+    }
+    return false;
+  }
   
 }
