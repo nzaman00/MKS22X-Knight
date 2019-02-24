@@ -53,4 +53,34 @@ public class KnightBoard{
     return false;
   }
   
+  public boolean solve(int startingRow, int startingCol) {
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board[i].length; j++) {
+        if (board[i][j] != 0) {
+          throw new IllegalStateException();
+        }
+      }
+    }
+    if (startingRow < 0 || startingRow >= board.length || startingCol < 0 || startingCol >= board[startingRow].length) {
+      throw new IllegalArgumentException();
+    }
+    return solveH(0,0,1);
+  }
+
+  private boolean solveH(int row, int col, int level) {
+    if (level > board.length * board[0].length) { 
+      return true;
+    } else {
+      if (addKnight(row, col, level)) {
+        for (int i = 0; i < movesR.length; i++) { 
+          if (solveH(row + movesR[i], col + movesC[i], level + 1)) {
+            return true;
+          }
+        }
+        removeKnight(row, col);
+      }
+      return false;
+    }
+  }
+  
 }
