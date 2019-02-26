@@ -83,4 +83,34 @@ public class KnightBoard{
     }
   }
   
+  public int countSolutions(int startingRow, int startingCol) {
+    for (int i = 0; i < board.length; i++) {
+      for (int j = 0; j < board[i].length; j++) {
+        if (board[i][j] != 0) {
+          throw new IllegalStateException();
+        }
+      }
+    }
+    if (startingRow < 0 || startingRow >= board.length || startingCol < 0 || startingCol >= board[startingRow].length) {
+      throw new IllegalArgumentException();
+    }
+    return countH(0,0,1);
+  }
+
+  private int countH(int row, int col, int level) {
+    int total = 0;
+    if (addKnight(row, col, level)) {
+      if (level == board.length * board[0].length) { 
+        removeKnight(row, col);
+        return 1;
+      } else {
+        for (int i = 0; i < movesR.length; i++) { 
+          total += countH(row + movesR[i], col + movesC[i], level + 1);
+        }
+      }
+      removeKnight(row, col);
+    }
+    return total;
+  }
+  
 }
